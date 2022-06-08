@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+a {
+    text-decoration: none;
+    color: #000;
+}
+p {
+    margin: 0;
+}
+
+h1 {
+  font-size: 2rem;
+}
+.wrapper {
+  display: flex;
+  text-decoration: none;
+  overflow-x: hidden;
+  transition: all 0.4s;
+}
+
+#sidebar {
+  width: 25%;
+  transition: all 0.4s;
+  position: relative;
+}
+
+#sidebar.active {
+  margin-left: -25%;
+}
+
+.sidebar-btn{
+  position: absolute;
+  right: 0%;
+  transform: translate(100%,0);
+  top: 10%;
+  z-index: 9999;
+  
+}
+.sidebar-btn div{
+  transition: all 0.4s;
+}
+.sidebar-btn div.active{
+  transform: rotate(-180deg);
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  background-color: #0ba29b;
+  border-radius: 50%;
+  text-align: center;
+  color: #fff;
+}
+
+.pharmacy-list ul {
+
+}
+.pharmacy-list ul li {
+    flex-direction: row;
+}
+.pharmacy-name {
+    font-size: 1.5rem;
+}
+.pharmacy-phone{
+    font-size: 1rem;
+}
+
+.pharmacy-box{
+  padding: 10px;
+  text-align: center;   
+}
+.pharmacy-box:nth-child(1) {
+  border-bottom-left-radius: 0.25rem; 
+  background-color: #0ba29b;
+}
+.pharmacy-box:nth-child(2) {
+  border-bottom-right-radius: 0.25rem;
+  background-color: #FBB03B;    
+}
+
+.text-green {
+  color: #0ba29b!important;
+}
+
+.btn-green{
+  color: #fff;
+  background-color: #0ba29b!important;
+  border-color: #0ba29b!important;
+}
+
+#map { 
+  width: 100%;
+  height: 100vh; 
+  margin: 0;
+}

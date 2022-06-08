@@ -2,32 +2,58 @@
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   <div>
-
     <div class="wrapper">
-      <div id="sidebar" :class="{ 'active': slidebar }">
+      <div id="sidebar" class="p-3" :class="{ 'active': slidebar }">
         <div class="sidebar-header">
-            <h3>jQueryScript</h3>
-          </div>
-          <ul class="lisst-unstyled components">
-            <p>My Nav</p>
-            <li class="active">
-              <a href="#foodSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">DropDown MENU</a>
-              <ul class="collapse lisst-unstyled" id="foodSubmenu">
-                <li><a href="#">jQuery</a></li>
-                <li><a href="#">Script</a></li>
-                <li><a href="#">Net</a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="#">Contact</a>
-            </li>
-            <li>
-              <a href="#">About</a>
+          <h1>口罩地圖</h1>
+        </div>
+        <div>
+          <img src="@/assets/images/doctor-icon.svg" alt="">
+        </div>
+        <div class="pharmacy-list">
+          <ul>
+            <li class="card flex-wrap pt-2">
+              <div class="col-9 pr-0">
+                <p class="pharmacy-name text-green ">宏岳藥局</p>
+                <p class="pharmacy-phone">
+                  <i class="fa-solid fa-phone"></i>                  
+                  <a href="">09-878787877</a>
+                </p>
+                <p class="pharmacy-address">
+                  <i class="fa-solid fa-location-dot"></i>
+                  基隆市仁愛區仁二路５號
+                </p>
+                <p class="pharmacy-note">
+                  <i class="fa-solid fa-message"></i>
+                  每日早上九點，不用領號碼牌開始發放口罩.
+                </p>
+              </div>
+              <div class="col-3 d-flex p-0">
+                <div class="circle mr-1">
+                  <i class="fa-solid fa-phone"></i>
+                </div>
+                <div class="circle">
+                  
+                </div>
+              </div>
+              <div class="w-100 d-flex">
+                <div class="col-6 pharmacy-box">
+                  成人: 
+                  <span>123</span>
+                </div>
+                <div class="col-6 pharmacy-box">
+                  兒童:
+                  <span>456</span>
+                </div>
+              </div>
             </li>
           </ul>
-          <button type="button" class="btn btn-dark" @click="slidebar = !slidebar">
-            <i class="fas fa-bars"></i><span> Toggle Sidebar</span>
-          </button>
+        </div>
+        <button type="button" class="btn btn-green sidebar-btn" @click="slidebar = !slidebar">
+          <div :class="{ 'active':slidebar }">
+            <i class="fa-solid fa-angle-right"></i>
+          </div>
+        </button>
       </div>
 
 
@@ -52,13 +78,13 @@ export default {
   },
   data() {
     return {
-      slidebar: true
+      slidebar: false
     }
   },
   mounted() {
     openStreetMap = leaflet.map('map', {
       center: [25.042474, 121.513729],
-      zoom: 18,      
+      zoom: 18,
       zoomControl: false
     });
 
@@ -69,31 +95,3 @@ export default {
   },
 }
 </script>
-
-<style>
-*{
-  margin: 0;
-  padding: 0;
-}
-.wrapper {
-  display: flex;
-  text-decoration: none;
-  overflow-x: hidden;
-  transition: all 0.4s;
-}
-
-#sidebar {
-  width: 20%;
-  transition: all 0.4s;
-}
-
-#sidebar.active {
-  margin-left: -20%;
-}
-
-#map { 
-  width: 100%;
-  height: 100vh; 
-  margin: 0;
-}
-</style>
