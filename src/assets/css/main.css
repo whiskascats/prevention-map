@@ -97,7 +97,8 @@ h1 {
 }
 .pharmacy-box{
   padding: 10px;
-  text-align: center;   
+  text-align: center;
+  color: #fff;
 }
 .pharmacy-box:nth-child(1) {
   border-bottom-left-radius: 0.25rem; 
@@ -139,5 +140,9 @@ h1 {
 }
 .leaflet-popup-content-wrapper p{
   margin: 0;
+}
+.icon{
+  width: 16px;
+  height: 16px;
 }
 

@@ -1,14 +1,16 @@
 // import {  ref, onMounted, computed } from 'vue';
 import leaflet from 'leaflet'
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
+import 'leaflet.markercluster/dist/leaflet.markercluster.js'
 import icons from '@/composition-API/icon.js'
 
 let openStreetMap = {}
 let markers = {}
-
+let markerList = {}
 export function createMap() {
   openStreetMap = leaflet.map('map', {
-    center: [25.052137, 121.555235],
-    zoom: 18,
+    center: [24.052137, 120.555235],
+    zoom: 8,
     zoomControl: false
   })
 
@@ -16,24 +18,37 @@ export function createMap() {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 20,
   }).addTo(openStreetMap)
+
+  markers = new leaflet.MarkerClusterGroup({
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: false,
+    zoomToBoundsOnClick: true
+  }).addTo(openStreetMap);
 }
 
-export function moveToMarker(data,index) {
-  openStreetMap.panTo(data.geometry.coordinates).setView(data.geometry.coordinates,15)
+export function moveToPosition(data) {
+  console.log(data)
+  openStreetMap.panTo(data).setView(data,19)
   
-  markers[index].openPopup()
+}
+export function popUpMarker(index) {
+  setTimeout(()=> {
+    markerList[index].openPopup()
+  },300)
 }
 
 export function markerSet(data) {
-  const { greenIcon, yellowIcon, redIcon, greyIcon } = iconSet()
-  data.forEach((item, index) => {
+  console.log(markers)
+  const { greenIcon, yellowIcon, redIcon, greyIcon } = iconSet()  
+  data.forEach((item,index) => {
     let maskTotal = item.properties.mask_adult+item.properties.mask_child
     let iconColor = {}
     if (maskTotal>=1500) iconColor = greenIcon
     else if (maskTotal>=750) iconColor = yellowIcon 
     else if (maskTotal>=1) iconColor = redIcon
     else iconColor = greyIcon
-    markers[index] = 
+
+    let newIcon = 
     leaflet.marker(item.geometry.coordinates, {icon: iconColor})
     .bindPopup(`
       <h3>${item.properties.name}</h3>
@@ -42,15 +57,15 @@ export function markerSet(data) {
       <p>成人口罩數量: ${item.properties.mask_adult}</p>
       <p>兒童口罩數量: ${item.properties.mask_child}</p>
     `)
-    .addTo(openStreetMap)    
+    markers.addLayer(newIcon)
+    markerList[index] = newIcon
   })
+  // openStreetMap.addLayer(markers)
 }
 
 export function markerRemove() {
-  markers = {}
-  openStreetMap.eachLayer(layer => {
-    if (layer instanceof leaflet.Marker) openStreetMap.removeLayer(layer);
-  })
+  markerList = {}
+  markers.clearLayers()
 }
 
 function iconSet() {
