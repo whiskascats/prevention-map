@@ -21,7 +21,7 @@
         </div>
 
       </div>
-      
+
       <div class="pharmacy-list">
         <ul v-if="filterData">
           <li class="card flex-wrap pt-2" v-for="(item,index) in filterData" :key="item.properties.id">
@@ -65,8 +65,9 @@
       </div>  
     </div>
 
-    <div class="sidebar-btn">
+    <div class="sidebar-btn" :class="{ 'active': slidebar }">
       <button type="button" class="btn btn-primary p-2" @click="slidebar = !slidebar">
+        
         <div>
           側邊欄
         </div>
@@ -78,12 +79,22 @@
 import { ref } from 'vue';
 
 export default {
-  name: 'sidebar',
+  name: 'MySidebar',
+  props: ['filterData'],
   setup() {
     const slidebar = ref(false)
 
+    function classColor(value) {
+      let className = ''
+      if (value>=750) className = 'bg-primary'
+      else if (value>=250) className = 'bg-warning'
+      else if(value>=1) className = 'bg-danger'
+      else className = 'bg-secondary'
+      return className
+    }
     return {
-      slidebar
+      slidebar,
+      classColor
     }
   },
 }

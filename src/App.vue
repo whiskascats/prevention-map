@@ -3,7 +3,7 @@
   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   <div>
     <div class="wrapper">
-      <sidebar-component></sidebar-component>
+      <sidebar-component :filter-data="filterData"></sidebar-component>
 
       <div id="map"></div>
     </div>
@@ -41,7 +41,7 @@
 
 <script>
 import {  ref, onMounted, computed } from 'vue';
-import sidebar from './components/sidebar.vue';
+import MySidebar from './components/Sidebar.vue';
 import { createMap, markerSet, markerRemove, moveToPosition, popUpMarker } from '@/composition-API/map.js';
 import axios from 'axios';
 // import dayjs from 'dayjs'
@@ -50,7 +50,7 @@ import $ from 'jquery'
 export default {
   name: 'App',
   components: {
-    'sidebar-component': sidebar
+    'sidebar-component': MySidebar
     // HelloWorld
   },
   setup() {
