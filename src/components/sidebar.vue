@@ -23,30 +23,30 @@
       </div>
 
       <div class="pharmacy-list">
-        <ul v-if="filterData">
-          <li class="card flex-wrap pt-2" v-for="(item,index) in filterData" :key="item.properties.id">
+        <ul v-if="data">
+          <li class="card flex-wrap pt-2" v-for="(item,index) in data" :key="item.properties.id">
             <div class="col-12 pr-0">
               <div class="d-flex justify-content-between align-items-center">
                 <p class="pharmacy-name text-primary "> {{item.properties.name}} </p>                  
                 <div class="col-3 d-flex p-0">
                   <div class="circle mr-1">
-                    <font-awesome-icon icon="fa-solid fa-phone-flip" />
+                    <i class="fa-solid fa-phone"></i>
                   </div>
                   <div class="circle" @click="moveToPosition(item.geometry.coordinates); popUpMarker(index);">
-                    <font-awesome-icon icon="fa-solid fa-location-dot" />
+                    <i class="fa-solid fa-location-dot"></i>
                   </div>
                 </div>
               </div>
               <p class="pharmacy-phone">
-                <font-awesome-icon icon="fa-solid fa-phone-flip" />
+                <i class="fa-solid fa-phone"></i>
                 <a href=""> {{item.properties.phone}} </a>
               </p>                  
               <p class="pharmacy-address" @click="moveToPosition(item.geometry.coordinates); popUpMarker(index);">
-                <font-awesome-icon icon="fa-solid fa-location-dot" />
+                <i class="fa-solid fa-location-dot"></i>
                 {{item.properties.address}}
               </p>
               <p class="pharmacy-note">
-                <font-awesome-icon icon="fa-solid fa-message" />
+                <i class="fa-solid fa-message"></i>
                 {{item.properties.note}}
               </p>
             </div>
@@ -77,13 +77,16 @@
 </template>
 <script>
 import { ref } from 'vue';
+import { useUserData } from '@/stores/useData';
+import { moveToPosition, popUpMarker } from '@/composition-API/map.js';
+import { storeToRefs } from 'pinia';
 
 export default {
-  name: 'MySidebar',
-  props: ['filterData'],
+  name: 'Sidebar',
   setup() {
     const slidebar = ref(false)
-
+    const userData = useUserData()
+    const { data } =  storeToRefs(userData);
     function classColor(value) {
       let className = ''
       if (value>=750) className = 'bg-primary'
@@ -94,7 +97,10 @@ export default {
     }
     return {
       slidebar,
-      classColor
+      classColor,
+      data,
+      moveToPosition,
+      popUpMarker 
     }
   },
 }

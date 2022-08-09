@@ -26,6 +26,22 @@ export function createMap() {
   }).addTo(openStreetMap);
 }
 
+export function getLocation() {
+  const succFn = function(position) {
+    let lat = position.coords.latitude;
+    let lng = position.coords.longitude;
+    moveToPosition([lat, lng])
+  };
+  const errFn = function() {
+    //reject
+  }
+  const options = {
+    maximumAge: 60000,
+    timeout: 45000
+  };
+  navigator.geolocation.getCurrentPosition(succFn, errFn, options);
+}
+
 export function moveToPosition(data) {
   console.log(data)
   openStreetMap.panTo(data).setView(data,19)
