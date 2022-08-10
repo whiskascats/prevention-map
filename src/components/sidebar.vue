@@ -23,8 +23,8 @@
       </div>
 
       <div class="pharmacy-list">
-        <ul v-if="data">
-          <li class="card flex-wrap pt-2" v-for="(item,index) in data" :key="item.properties.id">
+        <ul v-if="filterData">
+          <li class="card flex-wrap pt-2" v-for="(item,index) in filterData" :key="item.properties.id">
             <div class="col-12 pr-0">
               <div class="d-flex justify-content-between align-items-center">
                 <p class="pharmacy-name text-primary "> {{item.properties.name}} </p>                  
@@ -86,7 +86,7 @@ export default {
   setup() {
     const slidebar = ref(false)
     const userData = useUserData()
-    const { data } =  storeToRefs(userData);
+    const { filterData } =  storeToRefs(userData);
     function classColor(value) {
       let className = ''
       if (value>=750) className = 'bg-primary'
@@ -98,7 +98,7 @@ export default {
     return {
       slidebar,
       classColor,
-      data,
+      filterData,
       moveToPosition,
       popUpMarker 
     }
