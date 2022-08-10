@@ -4,6 +4,7 @@ export const useUserData = defineStore({
   id: 'Data',
   state: () => ({
     data: [],
+    maskData: [],
     cityData: []
   }),
 //   actions: {
