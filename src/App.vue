@@ -3,6 +3,7 @@
     <div class="wrapper">
       <sidebar-component></sidebar-component>
       <div id="map"></div>
+      <search-component></search-component>
     </div>
     <router-view></router-view>
     <search-component></search-component>
@@ -22,7 +23,7 @@ export default {
     'search-component': search
   },
   setup(props) {
-    onMounted(async() => {      
+    onMounted(async() => {
       createMap()
       getLocation()
     })

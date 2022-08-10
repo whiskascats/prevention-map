@@ -56,9 +56,10 @@ h1 {
 .sidebar-btn{
   position: absolute;
   left: 400px;
-  top: 10%;
+  top: 50%;
+  transform: translate(0,-100%);
   z-index: 500;
-  opacity: .6;
+  opacity: .8;
   transition: all .4s;
 }
 .sidebar-btn.active {
@@ -70,7 +71,13 @@ h1 {
   -webkit-writing-mode: vertical-lr;
   font-size: 20px;
 }
-
+.sidebar-btn.toggle-btn {
+  top: 30%;
+}
+.sidebar-btn a {
+  color: #fff;
+  text-decoration: none;
+}
 .circle {
   width: 30px;
   height: 30px;

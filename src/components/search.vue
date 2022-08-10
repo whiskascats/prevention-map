@@ -1,5 +1,5 @@
 <template>
-    <!-- Modal -->
+  <!-- Modal -->
   <div class="modal fade" id="searchBox" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -32,18 +32,16 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import { markerSet, markerRemove } from '@/composition-API/map.js';
-import { getMaskData } from '@/composition-API/useApi.js';
-import { useUserData } from '@/stores/useData';
 import { storeToRefs } from 'pinia';
-import axios from 'axios';
-import $ from 'jquery'
+import { useUserData } from '@/stores/useData';
+import { markerSet, markerRemove } from '@/composition-API/map.js';
+
 export default {
-  name: 'search',
+  name:'search',
+  
   setup() {
     const userData = useUserData()
-    const { cityData, maskData, filterData } = storeToRefs(userData)
-    const pharmaciesList = ref([])
+    const { type, cityData, maskData, quickData, filterData } = storeToRefs(userData)
     const townData = ref([])
     const county = ref('')
     const town = ref('')

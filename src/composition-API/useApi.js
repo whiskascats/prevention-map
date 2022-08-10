@@ -5,10 +5,12 @@ import { storeToRefs } from 'pinia';
 export async function getCityData() {
     const userData = useUserData()
     const { cityData } = storeToRefs(userData)
-    await axios.get('./cityData.json')
-    .then(res => {
-        cityData.value = res.data
-    })
+    if(cityData.value) {
+        await axios.get('./cityData.json')
+        .then(res => {
+            cityData.value = res.data
+        })
+    }
 }
 export async function getMaskData() {
     const userData = useUserData()
