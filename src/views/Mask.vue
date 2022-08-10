@@ -34,11 +34,10 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { markerSet, markerRemove } from '@/composition-API/map.js';
-import { getCityData } from '@/composition-API/useApi.js';
+import { getCityData, getMaskData } from '@/composition-API/useApi.js';
 import { useUserData } from '@/stores/useData';
 import { storeToRefs } from 'pinia';
 import axios from 'axios';
-// import dayjs from 'dayjs'
 import $ from 'jquery'
 
 export default {
@@ -46,30 +45,17 @@ export default {
   
   setup() {
     const userData = useUserData()
-    const { cityData } = storeToRefs(userData)
+    const { cityData, maskData, filterData } = storeToRefs(userData)
     const pharmaciesList = ref([])
     const townData = ref([])
     const county = ref('')
     const town = ref('')
     onMounted(async() => {
       await getCityData()
-      await axios
-      // .get('http://localhost:3000/features')
-      .get('https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json')
-      .then(res => {
-        pharmaciesList.value = res.data.features
-      })
+      await getMaskData()
       $('#searchBox').modal('show')
     })
     
-    function classColor(value) {
-      let className = ''
-      if (value>=750) className = 'bg-primary'
-      else if (value>=250) className = 'bg-warning'
-      else if(value>=1) className = 'bg-danger'
-      else className = 'bg-secondary'
-      return className
-    }
     function changeCity(value) {
       town.value = ''
       cityData.value.find(item => {
@@ -82,23 +68,22 @@ export default {
       markerRemove()
       document.querySelector('.county').innerHTML = county.value
       document.querySelector('.town').innerHTML = town.value
-      let data = pharmaciesList.value
+      let data = maskData.value
       if(county.value!='') data = data.filter(item=> item.properties.county == county.value)
       if(town.value!=''&&town.value!='全區') data = data.filter(item=> item.properties.town == town.value)
       data.forEach(item => {
         let [latitude, longitude] = item.geometry.coordinates
         item.geometry.coordinates = [longitude, latitude]
       })
-      userData.data = data
-      markerSet(userData.data)
+      filterData.value = data
+      markerSet(data)
     }
 
     return {
       cityData,
       townData,
       county,
-      town,
-      classColor,      
+      town,    
       changeCity,
       search
     }

@@ -12,11 +12,11 @@
 <script>
 import {  ref, onMounted, computed } from 'vue';
 import { createMap, getLocation } from '@/composition-API/map.js';
-import Sidebar from '@/components/Sidebar.vue';
+import sidebar from '@/components/sidebar.vue';
 export default {
   name: 'App',
   components: {
-    'sidebar-component': Sidebar
+    'sidebar-component': sidebar
   },
   setup(props) {
     onMounted(async() => {      

@@ -3,7 +3,8 @@ import { defineStore } from 'pinia'
 export const useUserData = defineStore({
   id: 'Data',
   state: () => ({
-    data: [],
+    maskData: [],
+    filterData: [],
     cityData: []
   }),
 //   actions: {

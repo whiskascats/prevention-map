@@ -4,8 +4,8 @@ const router = createRouter ({
   history: createWebHistory(process.env.BASE_URL),
   routes: [
     {
-      path: '/mask',
-      name: 'Mask',
+      path: '/',
+      name: 'mask',
       component: () => import('../views/Mask.vue')
     }
   ]
