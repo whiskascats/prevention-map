@@ -4,7 +4,7 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import { getCityData, getMaskData } from '@/composition-API/useApi.js';
+import { getCityData, getQuickData } from '@/composition-API/useApi.js';
 import $ from 'jquery'
 
 export default {
@@ -13,7 +13,7 @@ export default {
   setup() {
     onMounted(async() => {
       await getCityData()
-      await getMaskData()
+      await getQuickData()
       $('#searchBox').modal('show')
     })
   }
