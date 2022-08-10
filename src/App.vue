@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="wrapper">
-      <sidebar-component :filter-data="filterData"></sidebar-component>
+      <sidebar-component></sidebar-component>
       <div id="map"></div>
     </div>
     <router-view></router-view>

@@ -43,7 +43,6 @@ export function getLocation() {
 }
 
 export function moveToPosition(data) {
-  console.log(data)
   openStreetMap.panTo(data).setView(data,19)
   
 }
@@ -54,7 +53,6 @@ export function popUpMarker(index) {
 }
 
 export function markerSet(data) {
-  console.log(markers)
   const { greenIcon, yellowIcon, redIcon, greyIcon } = iconSet()  
   data.forEach((item,index) => {
     let maskTotal = item.properties.mask_adult+item.properties.mask_child
