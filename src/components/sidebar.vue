@@ -27,8 +27,15 @@
 
       <div class="pharmacy-list">
         <ul v-if="filterData">
-          <li class="card flex-wrap pt-2" v-for="(item,index) in filterData" :key="item.properties.id">
-            <mask-list-component :item="item" :index="index"></mask-list-component>
+          <li class="card flex-wrap pt-2" v-for="(item,index) in filterData" :key="index">
+            <template v-if="type=='mask'">
+              <mask-list-component :item="item" :index="index"></mask-list-component>
+            </template>
+            <template v-else>
+              <div>
+                
+              </div>
+            </template>
           </li>
         </ul>
       </div>  
