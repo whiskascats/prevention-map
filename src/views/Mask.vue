@@ -9,7 +9,6 @@ import { getCityData, getMaskData } from '@/composition-API/useApi.js';
 import { useUserData } from '@/stores/useData';
 import { storeToRefs } from 'pinia';
 import axios from 'axios';
-// import dayjs from 'dayjs'
 import $ from 'jquery'
 
 export default {
@@ -23,7 +22,6 @@ export default {
       await getMaskData()
       $('#searchBox').modal('show')
     })
-
   }
 }
 </script>

@@ -5,7 +5,7 @@ const router = createRouter ({
   routes: [
     {
       path: '/',
-      name: 'Mask',
+      name: 'mask',
       component: () => import('../views/Mask.vue')
     }
   ]

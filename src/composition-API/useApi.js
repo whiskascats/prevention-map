@@ -2,10 +2,10 @@ import axios from 'axios';
 import { useUserData } from '@/stores/useData';
 import { storeToRefs } from 'pinia';
 
-export function getCityData() {
+export async function getCityData() {
     const userData = useUserData()
     const { cityData } = storeToRefs(userData)
-    axios.get('./cityData.json')
+    await axios.get('./cityData.json')
     .then(res => {
         cityData.value = res.data
     })

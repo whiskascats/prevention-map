@@ -42,7 +42,7 @@ export default {
   name: 'search',
   setup() {
     const userData = useUserData()
-    const { cityData, maskData } = storeToRefs(userData)
+    const { cityData, maskData, filterData } = storeToRefs(userData)
     const pharmaciesList = ref([])
     const townData = ref([])
     const county = ref('')
@@ -63,8 +63,8 @@ export default {
       let data = maskData.value
       if(county.value!='') data = data.filter(item=> item.properties.county == county.value)
       if(town.value!=''&&town.value!='全區') data = data.filter(item=> item.properties.town == town.value)
-      userData.data = data
-      markerSet(userData.data)
+      filterData.value = data
+      markerSet(data)
     }
 
     return {
