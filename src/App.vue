@@ -3,6 +3,7 @@
     <div class="wrapper">
       <sidebar-component></sidebar-component>
       <div id="map"></div>
+      <search-component></search-component>
     </div>
     <router-view></router-view>
   </div>
@@ -12,14 +13,16 @@
 <script>
 import {  ref, onMounted, computed } from 'vue';
 import { createMap, getLocation } from '@/composition-API/map.js';
-import Sidebar from '@/components/Sidebar.vue';
+import sidebar from '@/components/sidebar.vue';
+import search from '@/components/search.vue';
 export default {
   name: 'App',
   components: {
-    'sidebar-component': Sidebar
+    'sidebar-component': sidebar,
+    'search-component': search
   },
   setup(props) {
-    onMounted(async() => {      
+    onMounted(async() => {
       createMap()
       getLocation()
     })

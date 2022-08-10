@@ -4,10 +4,15 @@ const router = createRouter ({
   history: createWebHistory(process.env.BASE_URL),
   routes: [
     {
-      path: '/mask',
-      name: 'Mask',
-      component: () => import('../views/Mask.vue')
-    }
+      path: '/',
+      name: 'mask',
+      component: () => import('../views/Mask.vue'),
+    },
+    {
+      path: '/quick',
+      name: 'quick',
+      component: () => import('../views/Quick.vue'),
+    },
   ]
 })
 

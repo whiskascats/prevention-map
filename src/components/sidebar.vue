@@ -4,13 +4,16 @@
     
       <div class="sidebar-header p-3">          
         <div class="d-flex justify-content-between">
-          <h2>口罩地圖</h2>
+          <h2> {{title}} </h2>
           <button type="button" class="btn" @click="slidebar = !slidebar">
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
-        <div>
+        <div class="d-flex">
           <img src="@/assets/images/doctor-icon.svg" alt="">
+          <p class="h4 text-info mx-3" v-if="type=='mask'">
+            注意！！<br>因為口罩即時資料已停止更新<br>本地圖僅供展示
+          </p>
         </div>
         <div class="mt-3">
           <button type="button" class="btn btn-outline-primary rounded-pill col-12" data-toggle="modal" data-target="#searchBox">
@@ -25,82 +28,76 @@
       <div class="pharmacy-list">
         <ul v-if="filterData">
           <li class="card flex-wrap pt-2" v-for="(item,index) in filterData" :key="item.properties.id">
-            <div class="col-12 pr-0">
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="pharmacy-name text-primary "> {{item.properties.name}} </p>                  
-                <div class="col-3 d-flex p-0">
-                  <div class="circle mr-1">
-                    <i class="fa-solid fa-phone"></i>
-                  </div>
-                  <div class="circle" @click="moveToPosition(item.geometry.coordinates); popUpMarker(index);">
-                    <i class="fa-solid fa-location-dot"></i>
-                  </div>
-                </div>
-              </div>
-              <p class="pharmacy-phone">
-                <i class="fa-solid fa-phone"></i>
-                <a href=""> {{item.properties.phone}} </a>
-              </p>                  
-              <p class="pharmacy-address" @click="moveToPosition(item.geometry.coordinates); popUpMarker(index);">
-                <i class="fa-solid fa-location-dot"></i>
-                {{item.properties.address}}
-              </p>
-              <p class="pharmacy-note">
-                <i class="fa-solid fa-message"></i>
-                {{item.properties.note}}
-              </p>
-            </div>
-            <div class="w-100 d-flex">
-              <div class="col-6 pharmacy-box" :class="classColor(item.properties.mask_adult)">
-                成人: 
-                <span> {{item.properties.mask_adult}} </span>
-              </div>
-              <div class="col-6 pharmacy-box" :class="classColor(item.properties.mask_child)">
-                兒童:
-                <span> {{item.properties.mask_child}} </span>
-              </div>
-            </div>
+            <mask-list-component :item="item"></mask-list-component>
           </li>
         </ul>
       </div>  
     </div>
 
+    <div class="sidebar-btn toggle-btn" :class="{ 'active': slidebar }">
+      <button type="button" class="btn btn-danger p-2" @click="changeType">        
+        <div>
+          <span v-if="type=='mask'">
+            <router-link to="/quick">
+              切換至快篩地圖
+            </router-link>
+          </span>
+          <span v-else>
+            <router-link to="/">
+              切換至口罩地圖
+            </router-link>
+          </span>
+        </div>
+      </button>
+    </div>
+
     <div class="sidebar-btn" :class="{ 'active': slidebar }">
-      <button type="button" class="btn btn-primary p-2" @click="slidebar = !slidebar">
-        
+      <button type="button" class="btn btn-primary p-2" @click="slidebar = !slidebar;">        
         <div>
           側邊欄
         </div>
       </button>
-    </div>  
+    </div>
   </div>
 </template>
 <script>
-import { ref } from 'vue';
-import { useUserData } from '@/stores/useData';
-import { moveToPosition, popUpMarker } from '@/composition-API/map.js';
+import { ref, watch  } from 'vue';
 import { storeToRefs } from 'pinia';
+import { useUserData } from '@/stores/useData';
+import { useRouter, useRoute } from 'vue-router'
+import masklist from '@/components/maskList.vue'
 
 export default {
-  name: 'Sidebar',
-  setup() {
+  name: 'sidebar',
+  components: {
+    'mask-list-component': masklist
+  },
+  setup(props) {
     const slidebar = ref(false)
+    const route = useRoute()
+    const title = ref('')
     const userData = useUserData()
-    const { filterData } =  storeToRefs(userData);
-    function classColor(value) {
-      let className = ''
-      if (value>=750) className = 'bg-primary'
-      else if (value>=250) className = 'bg-warning'
-      else if(value>=1) className = 'bg-danger'
-      else className = 'bg-secondary'
-      return className
+    const { type, filterData } =  storeToRefs(userData);
+    type.value = route.name
+    watch(type,() => {
+      if(type.value=='mask') title.value = '口罩地圖'
+      else title.value = '快篩地圖'
+    },{ immediate: true })
+
+    function changeType() {
+      slidebar.value = true
+      if(type.value=='mask') type.value = 'quick'
+      else type.value = 'mask'
+      setTimeout(() => {
+        slidebar.value = false
+      }, 800);
     }
     return {
       slidebar,
-      classColor,
       filterData,
-      moveToPosition,
-      popUpMarker 
+      changeType,
+      type,
+      title
     }
   },
 }
