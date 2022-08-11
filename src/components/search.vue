@@ -34,7 +34,7 @@
 import { ref, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useUserData } from '@/stores/useData';
-import { markerSet, markerRemove } from '@/composition-API/map.js';
+import { markerSet, markerSetQuick, markerRemove } from '@/composition-API/map.js';
 
 export default {
   name:'search',
@@ -56,13 +56,25 @@ export default {
     }
     function search() {
       markerRemove()
-      let data = maskData.value
       chooseCounty.value = county.value
       chooseTown.value = town.value
-      if(chooseCounty.value!='') data = data.filter(item=> item.properties.county == chooseCounty.value)
-      if(chooseTown.value!=''&&chooseTown.value!='全區') data = data.filter(item=> item.properties.town == chooseTown.value)
-      filterData.value = data
-      markerSet(data)
+      let data  = []
+      if(type.value=='mask') {
+        data = maskData.value
+        if(chooseCounty.value!='') data = data.filter(item=> item.properties.county == chooseCounty.value)
+        if(chooseTown.value!=''&&chooseTown.value!='全區') data = data.filter(item=> item.properties.town == chooseTown.value)
+        filterData.value = data
+        markerSet(data)
+      }
+      else {
+        data = quickData.value
+        if(chooseCounty.value!='') data = data.filter(item=> item.address.indexOf(chooseCounty.value)>-1)
+        if(chooseTown.value!=''&&chooseTown.value!='全區') data = data.filter(item=> item.address.indexOf(chooseTown.value)>-1)
+        filterData.value = data
+        markerSetQuick(data)
+      }
+
+      
     }
 
     return {

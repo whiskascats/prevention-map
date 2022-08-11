@@ -74,7 +74,28 @@ export function markerSet(data) {
     markers.addLayer(newIcon)
     markerList[index] = newIcon
   })
-  // openStreetMap.addLayer(markers)
+}
+
+export function markerSetQuick(data) {
+  const { greenIcon, yellowIcon, redIcon, greyIcon } = iconSet()  
+  data.forEach((item,index) => {
+    let iconColor = {}
+    if (item.stock>=80) iconColor = greenIcon
+    else if (item.stock>=30) iconColor = yellowIcon 
+    else if (item.stock>=1) iconColor = redIcon
+    else iconColor = greyIcon
+
+    let newIcon = 
+    leaflet.marker([item.latitude,item.longitude], {icon: iconColor})
+    .bindPopup(`
+      <h3>${item.name}</h3>
+      <p>地址: ${item.address}</p>
+      <p>電話: ${item.telephone}</p>
+      <p>快篩試劑數量: ${item.stock}</p>
+    `)
+    markers.addLayer(newIcon)
+    markerList[index] = newIcon
+  })
 }
 
 export function markerRemove() {

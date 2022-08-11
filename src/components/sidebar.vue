@@ -3,12 +3,17 @@
     <div id="sidebar" :class="{ 'active': slidebar }">
     
       <div class="sidebar-header p-3">          
-        <div class="d-flex justify-content-between">
-          <h2 v-if="type=='mask'">口罩地圖</h2>
-          <h2 v-else>快篩地圖</h2>
-          <button type="button" class="btn" @click="slidebar = !slidebar">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
+        <div class="d-flex row">          
+          <div class="col-10 d-flex justify-content-between">
+            <h2 v-if="type=='mask'">口罩地圖</h2>
+            <h2 v-else>快篩地圖</h2>
+            <small class="small" v-if="quickData.length!=0">資料更新於:<br> {{quickData[0].source_time}} </small>
+          </div>
+          <div class="col-2">
+            <button type="button" class="btn" @click="slidebar = !slidebar">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
         </div>
         <div class="d-flex">
           <img src="@/assets/images/doctor-icon.svg" alt="">
@@ -33,9 +38,7 @@
               <mask-list-component :item="item" :index="index"></mask-list-component>
             </template>
             <template v-else>
-              <div>
-                <mask-list-component :item="item" :index="index"></mask-list-component>
-              </div>
+              <quick-list-component :item="item" :index="index"></quick-list-component>
             </template>
           </li>
         </ul>
@@ -88,7 +91,7 @@ export default {
     const route = useRoute()
     const title = ref('')
     const userData = useUserData()
-    const { type, filterData, chooseCounty, chooseTown } =  storeToRefs(userData);
+    const { type, filterData, chooseCounty, chooseTown, quickData } =  storeToRefs(userData);
     type.value = route.name
 
     function changeType() {
@@ -108,7 +111,8 @@ export default {
       type,
       title,
       chooseCounty,
-      chooseTown
+      chooseTown,
+      quickData
     }
   },
 }

@@ -153,4 +153,7 @@ h1 {
   width: 16px;
   height: 16px;
 }
-
+.small {
+  font-size: 14px;
+  color: #aaa;
+}
