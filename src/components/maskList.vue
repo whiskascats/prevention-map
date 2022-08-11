@@ -39,7 +39,7 @@
 import { moveToPosition, popUpMarker } from '@/composition-API/map.js';
 
 export default {
-  name: 'mask-list',
+  name: 'maskList',
   props:['item','index'],
   setup() {
     function classColor(value) {

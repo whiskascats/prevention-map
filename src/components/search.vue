@@ -16,13 +16,13 @@
           </select>
           <select class="form-control mt-3" v-model="town">
             <option class="d-none" value="">請選擇鄉鎮</option>
-            <option value="全區" v-if="county"> 全區 </option>
+            <option value="全區" v-if="county!=''"> 全區 </option>
             <option :value="item.AreaName" v-for="(item, index) in townData" :key="index"> {{item.AreaName}} </option>
           </select>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal" @click="search">
-            <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+            <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
       </div>
@@ -41,9 +41,9 @@ export default {
   
   setup() {
     const userData = useUserData()
-    const { type, cityData, maskData, quickData, filterData } = storeToRefs(userData)
+    const { type, cityData, maskData, quickData, filterData, chooseCounty, chooseTown } = storeToRefs(userData)
     const townData = ref([])
-    const county = ref('')
+    const county  = ref('')
     const town = ref('')
     
     function changeCity(value) {
@@ -56,11 +56,11 @@ export default {
     }
     function search() {
       markerRemove()
-      document.querySelector('.county').innerHTML = county.value
-      document.querySelector('.town').innerHTML = town.value
       let data = maskData.value
-      if(county.value!='') data = data.filter(item=> item.properties.county == county.value)
-      if(town.value!=''&&town.value!='全區') data = data.filter(item=> item.properties.town == town.value)
+      chooseCounty.value = county.value
+      chooseTown.value = town.value
+      if(chooseCounty.value!='') data = data.filter(item=> item.properties.county == chooseCounty.value)
+      if(chooseTown.value!=''&&chooseTown.value!='全區') data = data.filter(item=> item.properties.town == chooseTown.value)
       filterData.value = data
       markerSet(data)
     }

@@ -7,9 +7,15 @@ export const useUserData = defineStore({
     maskData: [],
     quickData: [],
     filterData: [],
-    cityData: []
+    cityData: [],
+    chooseCounty: '',
+    chooseTown: ''
   }),
-//   actions: {
-   
-//   }
+  actions: {
+   reset() {
+     this.$state.filterData = []
+     this.$state.chooseCity = ''
+     this.$state.chooseTown = ''
+   }
+  }
 })

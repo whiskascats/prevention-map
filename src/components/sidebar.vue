@@ -4,7 +4,8 @@
     
       <div class="sidebar-header p-3">          
         <div class="d-flex justify-content-between">
-          <h2> {{title}} </h2>
+          <h2 v-if="type=='mask'">口罩地圖</h2>
+          <h2 v-else>快篩地圖</h2>
           <button type="button" class="btn" @click="slidebar = !slidebar">
             <i class="fa-solid fa-xmark"></i>
           </button>
@@ -17,9 +18,9 @@
         </div>
         <div class="mt-3">
           <button type="button" class="btn btn-outline-primary rounded-pill col-12" data-toggle="modal" data-target="#searchBox">
-            <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-            <span class="county pl-2"></span>
-            <span class="town pl-2"></span>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span class="county pl-2"> {{chooseCounty}} </span>
+            <span class="town pl-2"> {{chooseTown}} </span>
           </button>
         </div>
 
@@ -33,7 +34,7 @@
             </template>
             <template v-else>
               <div>
-                
+                <mask-list-component :item="item" :index="index"></mask-list-component>
               </div>
             </template>
           </li>
@@ -72,29 +73,30 @@ import { ref, watch  } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useUserData } from '@/stores/useData';
 import { useRouter, useRoute } from 'vue-router'
-import masklist from '@/components/maskList.vue'
+import { markerRemove } from '@/composition-API/map.js';
+import maskList from '@/components/maskList.vue'
+import quickList from '@/components/quickList.vue'
 
 export default {
   name: 'sidebar',
   components: {
-    'mask-list-component': masklist
+    'mask-list-component': maskList,
+    'quick-list-component': quickList
   },
   setup(props) {
     const slidebar = ref(false)
     const route = useRoute()
     const title = ref('')
     const userData = useUserData()
-    const { type, filterData } =  storeToRefs(userData);
+    const { type, filterData, chooseCounty, chooseTown } =  storeToRefs(userData);
     type.value = route.name
-    watch(type,() => {
-      if(type.value=='mask') title.value = '口罩地圖'
-      else title.value = '快篩地圖'
-    },{ immediate: true })
 
     function changeType() {
       slidebar.value = true
       if(type.value=='mask') type.value = 'quick'
       else type.value = 'mask'
+      markerRemove()
+      filterData.value = []
       setTimeout(() => {
         slidebar.value = false
       }, 800);
@@ -104,7 +106,9 @@ export default {
       filterData,
       changeType,
       type,
-      title
+      title,
+      chooseCounty,
+      chooseTown
     }
   },
 }
