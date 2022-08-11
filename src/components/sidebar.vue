@@ -16,9 +16,12 @@
           </div>
         </div>
         <div class="d-flex">
-          <img src="@/assets/images/doctor-icon.svg" alt="">
+          <img src="@/assets/images/doctor-icon.svg" alt="">          
           <p class="h4 text-info mx-3" v-if="type=='mask'">
             注意！！<br>因為口罩即時資料已停止更新<br>本地圖僅供展示
+          </p>
+          <p class="h4 text-info mx-3" v-else>
+            注意！！<br>每次每人限購一份(五劑)
           </p>
         </div>
         <div class="mt-3">
@@ -46,15 +49,15 @@
     </div>
 
     <div class="sidebar-btn toggle-btn" :class="{ 'active': slidebar }">
-      <button type="button" class="btn btn-danger p-2" @click="changeType">        
+      <button type="button" class="btn btn-danger p-2">        
         <div>
           <span v-if="type=='mask'">
-            <router-link to="/quick">
+            <router-link to="/quick" @click="changeType">
               切換至快篩地圖
             </router-link>
           </span>
           <span v-else>
-            <router-link to="/">
+            <router-link to="/" @click="changeType">
               切換至口罩地圖
             </router-link>
           </span>
@@ -96,10 +99,8 @@ export default {
 
     function changeType() {
       slidebar.value = true
-      if(type.value=='mask') type.value = 'quick'
-      else type.value = 'mask'
+      userData.reset()
       markerRemove()
-      filterData.value = []
       setTimeout(() => {
         slidebar.value = false
       }, 800);

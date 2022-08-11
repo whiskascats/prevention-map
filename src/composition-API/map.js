@@ -52,7 +52,7 @@ export function popUpMarker(index) {
   },300)
 }
 
-export function markerSet(data) {
+export function markerSetMask(data) {
   const { greenIcon, yellowIcon, redIcon, greyIcon } = iconSet()  
   data.forEach((item,index) => {
     let maskTotal = item.properties.mask_adult+item.properties.mask_child

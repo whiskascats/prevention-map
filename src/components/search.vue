@@ -10,13 +10,13 @@
           </button>
         </div>
         <div class="modal-body">
-          <select class="form-control" @change="changeCity($event.target.value)" v-model="county">
+          <select class="form-control" @change="changeCity($event.target.value)" v-model="cacheCounty">
             <option class="d-none" value="">請選擇縣市</option>
             <option :value="item.CityName" v-for="(item,index) in cityData" :key="index"> {{item.CityName}} </option>
           </select>
-          <select class="form-control mt-3" v-model="town">
+          <select class="form-control mt-3" v-model="cacheTown">
             <option class="d-none" value="">請選擇鄉鎮</option>
-            <option value="全區" v-if="county!=''"> 全區 </option>
+            <option value="全區" v-if="cacheCounty!=''"> 全區 </option>
             <option :value="item.AreaName" v-for="(item, index) in townData" :key="index"> {{item.AreaName}} </option>
           </select>
         </div>
@@ -34,14 +34,14 @@
 import { ref, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useUserData } from '@/stores/useData';
-import { markerSet, markerSetQuick, markerRemove } from '@/composition-API/map.js';
+import { markerSetMask, markerSetQuick, markerRemove } from '@/composition-API/map.js';
 
 export default {
   name:'search',
   
   setup() {
     const userData = useUserData()
-    const { type, cityData, maskData, quickData, filterData, chooseCounty, chooseTown } = storeToRefs(userData)
+    const { type, cityData, maskData, quickData, filterData, chooseCounty, cacheCounty, chooseTown, cacheTown } = storeToRefs(userData)
     const townData = ref([])
     const county  = ref('')
     const town = ref('')
@@ -56,15 +56,15 @@ export default {
     }
     function search() {
       markerRemove()
-      chooseCounty.value = county.value
-      chooseTown.value = town.value
+      chooseCounty.value = cacheCounty.value
+      chooseTown.value = cacheTown.value
       let data  = []
       if(type.value=='mask') {
         data = maskData.value
         if(chooseCounty.value!='') data = data.filter(item=> item.properties.county == chooseCounty.value)
         if(chooseTown.value!=''&&chooseTown.value!='全區') data = data.filter(item=> item.properties.town == chooseTown.value)
         filterData.value = data
-        markerSet(data)
+        markerSetMask(data)
       }
       else {
         data = quickData.value
@@ -80,8 +80,8 @@ export default {
     return {
       cityData,
       townData,
-      county,
-      town,    
+      cacheCounty,
+      cacheTown,    
       changeCity,
       search
     }

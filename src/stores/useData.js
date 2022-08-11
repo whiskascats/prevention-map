@@ -9,13 +9,18 @@ export const useUserData = defineStore({
     filterData: [],
     cityData: [],
     chooseCounty: '',
-    chooseTown: ''
+    cacheCounty: '',
+    chooseTown: '',
+    cacheTown: ''
   }),
   actions: {
-   reset() {
-     this.$state.filterData = []
-     this.$state.chooseCity = ''
-     this.$state.chooseTown = ''
-   }
+    reset() {
+      this.$state.type == 'mask' ? this.$state.type = 'quick' : this.$state.type = 'mask'
+      this.$state.filterData = []
+      this.$state.chooseCounty = ''
+      this.$state.cacheCounty = ''
+      this.$state.chooseTown = ''
+      this.$state.cacheTown = ''
+    }
   }
 })
