@@ -90,20 +90,15 @@ export default {
     'quick-list-component': quickList
   },
   setup(props) {
-    const slidebar = ref(false)
     const route = useRoute()
     const title = ref('')
     const userData = useUserData()
-    const { type, filterData, chooseCounty, chooseTown, quickData } =  storeToRefs(userData);
+    const { type, filterData, chooseCounty, chooseTown, quickData, slidebar } =  storeToRefs(userData);
     type.value = route.name
 
     function changeType() {
-      slidebar.value = true
       userData.reset()
-      markerRemove()
-      setTimeout(() => {
-        slidebar.value = false
-      }, 800);
+      markerRemove()      
     }
     return {
       slidebar,

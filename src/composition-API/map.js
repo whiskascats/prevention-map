@@ -3,6 +3,8 @@ import leaflet from 'leaflet'
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 import 'leaflet.markercluster/dist/leaflet.markercluster.js'
 import icons from '@/composition-API/icon.js'
+import { storeToRefs } from 'pinia';
+import { useUserData } from '@/stores/useData';
 
 let openStreetMap = {}
 let markers = {}
@@ -42,9 +44,11 @@ export function getLocation() {
   navigator.geolocation.getCurrentPosition(succFn, errFn, options);
 }
 
-export function moveToPosition(data) {
-  openStreetMap.panTo(data).setView(data,19)
-  
+export function moveToPosition(data) {  
+  const userData = useUserData()
+  const { slidebar } = storeToRefs(userData)
+  slidebar.value = true
+  openStreetMap.panTo(data).setView(data,19)  
 }
 export function popUpMarker(index) {
   setTimeout(()=> {
