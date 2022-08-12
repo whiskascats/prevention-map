@@ -15,7 +15,7 @@ export default {
     onMounted(async() => {
       await getCityData()
       await getMaskData()
-      // $('#searchBox').modal('show')
+      $('#searchBox').modal('show')
     })
   }
 }

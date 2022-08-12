@@ -35,6 +35,11 @@ h1 {
   background-color: #fff;
   z-index: 999;
 }
+@media (max-width: 420px) {
+  #sidebar  {
+    width: 100%;
+  }
+}
 #sidebar::-webkit-scrollbar {
   width: 10px;
 }
@@ -43,7 +48,7 @@ h1 {
   border-radius: 50px;
 }
 #sidebar.active {
-  margin-left: -400px;
+  transform: translate(-100%, 0);
 }
 
 .sidebar-header {

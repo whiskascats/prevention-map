@@ -15,7 +15,7 @@ export default {
     onMounted(async() => {
       await getCityData()
       await getQuickData()
-      // $('#searchBox').modal('show')
+      $('#searchBox').modal('show')
     })
   }
 }

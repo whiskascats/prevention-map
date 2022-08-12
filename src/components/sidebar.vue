@@ -49,7 +49,7 @@
     </div>
 
     <div class="sidebar-btn toggle-btn" :class="{ 'active': slidebar }">
-      <button type="button" class="btn btn-danger p-2">        
+      <button type="button" class="btn btn-danger p-2 w-100">        
         <div>
           <span v-if="type=='mask'">
             <router-link to="/quick" @click="changeType">
@@ -66,7 +66,7 @@
     </div>
 
     <div class="sidebar-btn" :class="{ 'active': slidebar }">
-      <button type="button" class="btn btn-primary p-2" @click="slidebar = !slidebar;">        
+      <button type="button" class="btn btn-primary p-2 w-100" @click="slidebar = !slidebar;">        
         <div>
           側邊欄
         </div>
