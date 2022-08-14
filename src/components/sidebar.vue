@@ -6,8 +6,10 @@
         <div class="d-flex row">          
           <div class="col-10 d-flex justify-content-between">
             <h2 v-if="type=='mask'">口罩地圖</h2>
-            <h2 v-else>快篩地圖</h2>
-            <small class="small" v-if="quickData.length!=0">資料更新於:<br> {{quickData[0].source_time}} </small>
+            <template v-else>
+              <h2>快篩地圖</h2>              
+              <small class="small" v-if="quickData.length!=0">資料更新於:<br> {{quickData[0].source_time}} </small>
+            </template>
           </div>
           <div class="col-2">
             <button type="button" class="btn" @click="slidebar = !slidebar">
