@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkprevention_map"]=self["webpackChunkprevention_map"]||[]).push([[651],{1651:function(n,e,a){function t(n,e,a,t,r,u){return null}a.r(e),a.d(e,{default:function(){return f}});var r=a(3396),u=a(9544),s=a(7387),c=a.n(s),o={name:"Mask",setup(){(0,r.bv)((async()=>{await(0,u.qN)(),await(0,u.mA)(),c()("#searchBox").modal("show")}))}},i=a(89);const p=(0,i.Z)(o,[["render",t]]);var f=p}}]);
+//# sourceMappingURL=651.72ed73a6.js.map
